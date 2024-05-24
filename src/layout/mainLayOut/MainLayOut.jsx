@@ -1,12 +1,13 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "../../components/shareComponent/NavBar";
+import Footer from "../../components/shareComponent/Footer";
 
 const MainLayOut = () => {
     return (
-        <div className="lg:max-w-[1300px] md:max-w-[750px] lg:mx-auto md:mx-auto  font-poppins">
+        <div className="font-poppins">
             <NavBar/>
             <Outlet></Outlet>
-            <h2>Foother</h2>
+            <Footer/>
         </div>
     );
 };

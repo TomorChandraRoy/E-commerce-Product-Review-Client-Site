@@ -1,50 +1,41 @@
 
 const Banner = () => {
     return (
-        <div  className="">
-            <section
-                className="relative bg-[url(https://images.unsplash.com/photo-1604014237800-1c9102c219da?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80)] bg-cover bg-center bg-no-repeat"
-            >
-                <div
-                    className="absolute inset-0 bg-white/75 sm:bg-transparent sm:from-white/95 sm:to-white/25 ltr:sm:bg-gradient-to-r rtl:sm:bg-gradient-to-l"
-                ></div>
-
-                <div
-                    className="relative mx-auto max-w-screen-xl px-4 py-32 sm:px-6 lg:flex lg:h-screen lg:items-center lg:px-8"
-                >
-                    <div className="max-w-xl text-center ltr:sm:text-left rtl:sm:text-right">
-                        <h1 className="text-3xl font-extrabold sm:text-5xl">
-                            Let us find your
-
-                            <strong className="block font-extrabold text-rose-700"> Forever Home. </strong>
+        <>
+            <section className="text-black bg-[#C1DCDC] body-font">
+                <div className="container mx-auto flex px-5 pt-14  md:flex-row flex-col items-center">
+                    <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+                        <h1 className="title-font sm:text-5xl lg:text-3xl md:text-2xl mb-4 font-bold ">Buy your
+                            <br className="hidden lg:inline-block" /> dream plants
                         </h1>
-
-                        <p className="mt-4 max-w-lg sm:text-xl/relaxed">
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt illo tenetur fuga ducimus
-                            numquam ea!
-                        </p>
-
-                        <div className="mt-8 flex flex-wrap gap-4 text-center">
-                            <a
-                                href="#"
-                                className="block w-full rounded bg-rose-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-rose-700 focus:outline-none focus:ring active:bg-rose-500 sm:w-auto"
-                            >
-                                Get Started
-                            </a>
-
-                            <a
-                                href="#"
-                                className="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-rose-600 shadow hover:text-rose-700 focus:outline-none focus:ring active:text-rose-500 sm:w-auto"
-                            >
-                                Learn More
-                            </a>
+                        <div className="flex justify-between gap-10">
+                            <div>
+                                <p className="mt-4 font-bold max-w-lg sm:text-xl/relaxed">
+                                    50+
+                                </p>
+                                <strong className="block font-extrabold "> Plant Species </strong>
+                            </div>
+                            <div>
+                                <p className="mt-4 font-bold max-w-lg sm:text-xl/relaxed">
+                                    100+
+                                </p>
+                                <strong className="block font-extrabold"> Customers</strong>
+                            </div>
                         </div>
+
+                        <label className="input input-bordered flex items-center gap-[6rem] mt-5">
+                            <input type="text" className="grow" placeholder="What are you looking for?" />
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-[2rem] h-[2rem] rounded p-[3px] bg-[#C1DCDC] opacity-70"><path fillRule="evenodd" d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" clipRule="evenodd" /></svg>
+                        </label>
+                    </div>
+                    <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+                        <img className="object-cover object-center rounded" alt="hero" src="https://i.ibb.co/fXx8rWt/file.png" />
                     </div>
                 </div>
             </section>
-
-        </div>
-    );
+        </>
+    )
 };
-
 export default Banner;
+
+
