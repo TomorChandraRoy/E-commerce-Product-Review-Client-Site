@@ -1,5 +1,18 @@
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import useAxiosPublic from "../../hook/axiosPublic/useAxiosPublic";
 
 const Products = () => {
+
+    useEffect(() => {
+        const useAxios = useAxiosPublic();
+        useAxios.get("/allproductsdata")
+            .then(res => {
+                console.log(res.data);
+            }
+            )
+
+    }, []);
     return (
         <div>
             <section className="text-black  body-font lg:mt-5 ">
@@ -10,7 +23,7 @@ const Products = () => {
                         </h1>
                         <p className="mb-8 leading-relaxed">Easiest way to healthy life by buying your favorite plants </p>
                         <div className="flex justify-center">
-                            <button className="inline-flex text-black bg-[#C1DCDC] border-0 lg:py-2 lg:px-6 md:py-1 md:px-3 focus:outline-none hover:bg-indigo-600 rounded text-lg">See more ➡</button>
+                            <Link to="/products"><button className="inline-flex text-black bg-[#C1DCDC] border-0 lg:py-2 lg:px-6 md:py-1 md:px-3 focus:outline-none hover:bg-indigo-600 rounded text-lg">See more ➡</button></Link>
                         </div>
                     </div>
                     <div className="grid gap-12 md:gap-6 lg:grid-cols-3 md:grid-cols-3  grid-cols-1 ">

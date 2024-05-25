@@ -4,6 +4,7 @@ import useAxiosPublic from './../../hook/axiosPublic/useAxiosPublic';
 import { BsFillGridFill, BsList } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from "react-icons/rx";
+import { FaRegStar, FaStarHalfAlt } from "react-icons/fa";
 
 
 const Product = () => {
@@ -19,13 +20,13 @@ const Product = () => {
 
     // Pagination 
     const [totalProduct, setTotalProduct] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
     // console.log(totalProduct);
     const [itemPerPage, setItemPerPage] = useState(10);
-    const [currentPage, setCurrentPage] = useState(0);
-    const [loading ,setLoading] = useState(false);
-    const numberOfPage = Math.ceil(parseFloat (totalProduct) / itemPerPage);
+    const numberOfPage = Math.ceil(totalProduct / itemPerPage);
     const pages = [...Array(numberOfPage).keys()];
     // console.log(pages);
+    const [loading, setLoading] = useState(false);
 
     //@ Filtering Api
     useEffect(() => {
@@ -37,12 +38,12 @@ const Product = () => {
             })
     }, [category]);
 
-    const handleCategory = (e) =>{
-        setCategory(e.target.value );
+    const handleCategory = (e) => {
+        setCategory(e.target.value);
     }
     //@ Filtering Api End
 
-     //@ Sorting Api
+    //@ Sorting Api
     useEffect(() => {
         fetch(`http://localhost:5000/sortingproduct/?sortField=price&sortOrder=${sort}`)
             .then(res => res.json())
@@ -57,7 +58,7 @@ const Product = () => {
         setSort(e.target.value)
     }
     //@ Sorting Api End
-    
+
     //@ Grid&List &api pagination
     useEffect(() => {
         const fetchData = async () => {
@@ -71,23 +72,22 @@ const Product = () => {
         }
         fetchData();
 
-    }, [currentPage,itemPerPage]);
+    }, [currentPage, itemPerPage]);
     //@ Grid&List end
 
     // @ Pagination Api
     useEffect(() => {
 
-           useAxios.get("/productpagination")
-              .then(res => {
+        useAxios.get("/productpagination")
+            .then(res => {
                 setTotalProduct(res.data.total);
-              }  
+            }
             )
-    
+
 
     }, []);
 
-    const handleItemPerPage =(e)=>{
-        console.log( e.target.value);
+    const handleItemPerPage = (e) => {
         const val = parseInt(e.target.value);
         setItemPerPage(val);
         setCurrentPage(0);
@@ -95,22 +95,15 @@ const Product = () => {
 
     };
 
-    const currentPageHandle = (number) => {
-        setCurrentPage(number);
-        setLoading(!loading);
-    };
-
-    const previousBtnHandle = ()=>{
-        if(currentPage > 0){
+    const previousBtnHandle = () => {
+        if (currentPage > 0) {
             setCurrentPage(currentPage - 1)
-           
             setLoading(!loading)
         }
     };
-    const nextBtnHandle =()=>{
-        if(currentPage < numberOfPage -1){
+    const nextBtnHandle = () => {
+        if (currentPage < pages.length - 1) {
             setCurrentPage(currentPage + 1)
-           
             setLoading(!loading)
         }
     };
@@ -139,7 +132,7 @@ const Product = () => {
                     {/* ! sorting */}
                     <div className="h-10 w-full">
                         <select defaultValue="" onChange={handleSorting} className="bg-[#0cc4b0] text-white" >
-                            
+
                             <option value="" select> Sort by price</option>
                             <option value="1">Asending sort by price</option>
                             <option value="-1">desending sort by price</option>
@@ -150,7 +143,7 @@ const Product = () => {
                     {/* filtering */}
                     <div>
                         <select value={category} onChange={handleCategory} className="select select-bordered w-full max-w-xs">
-                            <option  value="">Filtering</option>
+                            <option value="">Filtering</option>
                             <option value="Outdoor">Outdoor</option>
                             <option value="Indoor">Indoor</option>
                             <option value="Succulent">Succulent</option>
@@ -164,7 +157,7 @@ const Product = () => {
             </div>
             <div className={`mt-4 ${view === 'grid' ? 'grid grid-cols-3 gap-4' : 'list'}`}>
                 {
-                    allData?.map(singleProduct =>
+                    allData?.map((singleProduct, index) =>
                         <div className={`card ${view === 'grid' ? '' : 'flex flex-row items-center'} bg-base-100 shadow-xl border border-red-400`}>
                             <figure className={`${view === 'grid' ? '' : 'flex-none w-1/3'}`}>
                                 <img className="object-cover w-[200px] mt-3" src={singleProduct.image} alt="Album" />
@@ -172,7 +165,8 @@ const Product = () => {
                             <div className="card-body">
                                 <h2 className="card-title">{singleProduct.name}</h2>
                                 <p>${singleProduct.price}</p>
-                                <span>⭐{singleProduct.rating}</span>
+                                <span>Rating: {singleProduct.rating}</span>
+                                
                                 <div className="card-actions justify-end">
                                     <Link to={`/allproducts/${singleProduct._id}`}><button className="btn btn-primary">Details</button></Link>
                                 </div>
@@ -182,27 +176,24 @@ const Product = () => {
                 }
             </div>
             {/* Pagination */}
-            <div className="grid justify-center my-12 gap-3">  
+            <div className="grid justify-center my-12 gap-3">
                 {/* //" */}
                 <div>
-                {/*  onClick={nextBtnHandle} */}
+                    {/*  onClick={nextBtnHandle} */}
                     <button onClick={previousBtnHandle} className="btn bg-gray-200 mx-1 lg:mx-4"><RxDoubleArrowLeft></RxDoubleArrowLeft></button>
 
                     {
-                        pages.map((page,index) => 
-                        <button
-                         onClick={() => currentPageHandle(page)} key={index} className={currentPage === page ? "btn bg-[#0cc4b0] text-white lg:mx-4 hover:bg-[#09ad9b]" : "btn bg-gray-200 mx-1 lg:mx-4"} >{index + 1}
-
-                        </button>
+                        pages.map((page, index) =>
+                            <button onClick={() => setCurrentPage(page)} key={index} className={currentPage === page ? "btn bg-[#0cc4b0] text-white lg:mx-4 hover:bg-[#09ad9b]" : "btn bg-gray-200 mx-1 lg:mx-4"}>{index + 1}</button>
                         )
                     }
 
-                    <button onClick={nextBtnHandle}  className="btn bg-gray-200 mx-1 lg:mx-4"><RxDoubleArrowRight></RxDoubleArrowRight></button>
+                    <button onClick={nextBtnHandle} className="btn bg-gray-200 mx-1 lg:mx-4"><RxDoubleArrowRight></RxDoubleArrowRight></button>
 
-                    <select value={itemPerPage} onChange={handleItemPerPage}>
-                        <option  selected>Page</option>
+                    <select className="btn bg-[#0cc4b0]" value={itemPerPage} onChange={handleItemPerPage}>
+                        <option disabled selected>Page</option>
                         <option value="5">5</option>
-                        <option value="15">15</option>
+                        <option value="10">10</option>
                         <option value="20">20</option>
                         <option value="23">23</option>
                     </select>

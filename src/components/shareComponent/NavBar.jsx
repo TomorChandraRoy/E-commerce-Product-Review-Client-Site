@@ -8,6 +8,7 @@ import { AuthContext } from "../../hook/provider/AuthProvider";
 
 const NavBar = () => {
     const { user, logOut } = useContext(AuthContext);
+    console.log(user);
     const navigate = useNavigate();
 
     //LogOut Handle
@@ -50,16 +51,19 @@ const NavBar = () => {
                             user ? <>
                                 <div className="flex justify-center items-center gap-2">
                                     <label tabIndex={0} className="btn btn-ghost btn-circle avatar ">
-                                        <div className="w-10 rounded-full">
+                                        <div className="w-24 flex justify-center items-center mb-7 rounded-full">
                                             {
                                                 user &&
-                                                <img src={user.photoURL} alt="User Image" />
+                                                <div>
+                                                    <img className="w-5 h-6" src={user?.photoURL} alt="User Image" />
+                                                </div>
+
                                             }
                                         </div>
 
                                     </label>
                                 </div>
-                                <button className="btn hidden lg:flex" onClick={onSignout}>SignOut</button>
+                                <button className="btn hidden bg-[#97b6b6] lg:flex" onClick={onSignout}>SignOut</button>
                             </>
                                 :
                                 <Link to="/signin">

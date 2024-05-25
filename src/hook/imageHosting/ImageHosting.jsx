@@ -1,8 +1,9 @@
-import useAxiosPublic from "../axiosPublic/useAxiosPublic";
+import axios from "axios";
 
-export const UsePhoto = async (imgloc)=> {
-    const formData = new FormData()
-    formData.append('image',imgloc)
+
+export const UsePhoto = async (imgURL)=> {
+    const formData = new FormData();
+    formData.append('image',imgURL)
     const key = import.meta.env.VITE_IMAGE_HOSTING_KEY
     const { data } = await axios.post(`https://api.imgbb.com/1/upload?key=${key}`,formData);
     // console.log(data.data.display_url);
@@ -10,16 +11,4 @@ export const UsePhoto = async (imgloc)=> {
   }
 
  
-  const ImageHosting = () => {
-    const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
-    const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
-    const axiosPublic = useAxiosPublic(); 
-    return (
-        <div>
-           
-        </div>
-    );
-  };
-  
-  export default ImageHosting;
 

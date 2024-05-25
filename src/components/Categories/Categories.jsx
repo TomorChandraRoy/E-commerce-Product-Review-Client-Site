@@ -1,6 +1,19 @@
+import { useEffect } from "react";
+import useAxiosPublic from "../../hook/axiosPublic/useAxiosPublic";
+import { Link } from "react-router-dom";
 
 
 const Categories = () => {
+    const useAxios = useAxiosPublic();
+
+    useEffect(() => {
+        useAxios.get("/allproductsdata")
+            .then(res => {
+                // console.log(res.data);
+            }
+            )
+
+    }, []);
 
     return (
         <>
@@ -35,7 +48,7 @@ const Categories = () => {
                                     <div className="flex flex-col text-center mt-3 mb-28">
                                         <p className="font-bold text-gray-800 text-center transition duration-100 lg:text-lg">Plant Accessories</p>
                                         <p>Horem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                        <button type="button" className="mt-4 btn btn-success mx-auto">Explore ➡ </button>
+                                        <Link to="/products"><button type="button" className="mt-4 btn hover:bg-indigo-600 bg-[#97b6b6] border-none mx-auto">Explore ➡ </button></Link>
                                     </div>
                                 </div>
                             </div>

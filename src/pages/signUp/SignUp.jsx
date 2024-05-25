@@ -1,35 +1,52 @@
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link, } from "react-router-dom";
+import { Link, useNavigate, } from "react-router-dom";
 import { AuthContext } from "../../hook/provider/AuthProvider";
 import useAxiosPublic from "../../hook/axiosPublic/useAxiosPublic";
+import swal from "sweetalert";
+import { UsePhoto } from "../../hook/imageHosting/ImageHosting";
 
 
 const SignUp = () => {
-    const { createAccount } = useContext(AuthContext);
+    const { createAccount, updateUserProfile } = useContext(AuthContext);
     const axiosPublic = useAxiosPublic();
-    const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
-    const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
-
+  
     //#React hook Form
-    const { register, formState: { errors }, handleSubmit, } = useForm();
-    const onSubmit = (data) => {
-        // console.log(data.photoURL[0]);
-        console.log(data.user);
+    const { register, formState: { errors }, handleSubmit, reset } = useForm();
+    const navigate = useNavigate();
 
-        //Image Hosting 
-        // const signUpInputImg = data.photoURL[0];
-        // const signUpImg = await axiosPublic.post(image_hosting_api, signUpInputImg, {
-        //     headers: { 'Content-Type': 'multipart/form-data' }
-        // });
-        // console.log(signUpImg.data);
+    const handleFormSubmit = async (data) => {
+        try {
+            const imgURL = data.photoURL[0];
+                const img = await UsePhoto(imgURL);
+                data.photoURL = img;
+                // console.log(imgURL);
+                createAccount(data.email, data.password)
+                .then(async () => {
+                      const res = await axiosPublic.post("/userdata", data);
+                      console.log(res);
 
-        //#CREATE AUTH Firebase
-        createAccount(data.email, data.password)
-            .then(result => {
-                console.log("", result)
-            })
-            .catch(error => { console.error(error) });
+                      //update User
+                      updateUserProfile(data.name,data.photoURL)
+                      .then(() => {
+                        console.log("user Profile updated!")
+                        reset();
+                        swal("YOUR ACCOUNT SUCCESS!", "", "success");
+                        navigate("/");
+                      }).catch((error) => {
+                        console.error(error);
+                      });
+                      
+                      
+                  })
+                  .catch((err) => console.log(err));
+              
+        } catch (error) {
+            console.error('Error creating account:', error);
+                swal("Error creating account", error.message, "error");
+        }
+      
+        
     }
 
     return (
@@ -46,7 +63,7 @@ const SignUp = () => {
                         <p>Unlock your dream home with us! Join now for exclusive listings, personalized insights, and expert guidance. Your key to finding the perfect place to call home starts here.</p>
                     </div>
                     <div className="shadow-2xl bg-white rounded-xl mx-3 my-2 w-full md:w-2/5">
-                        <form onSubmit={handleSubmit(onSubmit)} className="card-body w-full">
+                        <form onSubmit={handleSubmit(handleFormSubmit)} className="card-body w-full">
                             {/* Name input box */}
                             <div className="form-control">
                                 <label className="label">
