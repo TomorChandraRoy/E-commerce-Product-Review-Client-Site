@@ -93,7 +93,7 @@ const ProductsDetails = () => {
                 </div>
             </section>
             
-            <div className=" max-w-7xl  h-[800px] my-20   mx-auto">
+            <div className=" px-14 flex  justify-center">
 
                 
                   <AddReview  ></AddReview>

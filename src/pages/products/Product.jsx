@@ -110,7 +110,7 @@ const Product = () => {
     // @ Pagination Api End
 
     return (
-        <div className="my-10">
+        <div className="my-10 lg:px-10 px-5">
             <div className="flex justify-between mt-10 p-2">
                 <div className="flex space-x-2 ">
                     <button
@@ -155,7 +155,7 @@ const Product = () => {
                 </div>
 
             </div>
-            <div className={`mt-4 ${view === 'grid' ? 'grid grid-cols-3 gap-4' : 'list'}`}>
+            <div className={`mt-4 ${view === 'grid' ? 'grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4' : 'list'}`}>
                 {
                     allData?.map((singleProduct, index) =>
                         <div className={`card ${view === 'grid' ? '' : 'flex flex-row items-center'} bg-base-100 shadow-xl border border-red-400`}>
